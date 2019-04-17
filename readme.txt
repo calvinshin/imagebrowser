@@ -6,7 +6,11 @@ Have different popular categories of images and subcategories.
 When a button is clicked, the image pulls 10 static images.
 Clicking them should animate the GIF. Clicking again toggles it to stop.
 
-Display the rating and the title for the giphy. Maybe a section to copy and paste the giphy.
+Display the rating and the title for the giphy. 
+
+
+
+Maybe a section to copy and paste the giphy.
 
 Add a form that allows input box to add to the topics array. Add the topic to the array and then... remake the button. Or store it (since there will be subcategories)
 
