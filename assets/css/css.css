@@ -52,3 +52,21 @@ div.card:hover{
 #sidebarheader {
     color: white;
 }
+
+@media (max-width: 760px) {
+    .leftcolumn {
+        position: absolute;
+        overflow-y: scroll;
+        height: 60%;
+        background-color: yellow;
+    }
+    
+    .rightcolumn {
+        position: absolute;
+        overflow-y: scroll;
+        top: 60%;
+        height: 40%;
+    }
+}
+
+/* https://css-tricks.com/scroll-fix-content/ */

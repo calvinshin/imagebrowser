@@ -97,63 +97,77 @@ var app = {
             }).then( function(response) {
                 var data = response.data;
 
-                // container div
-                var containerdiv = $("<div>");
-                containerdiv.addClass("card border-secondary cardcontainer");
-
-                // image div
-                var img = $("<img>");
-                img.addClass("card-img-top p-2 border-secondary image");
-                img.attr("src", data.fixed_height_small_still_url);
-                img.attr("state", "still");
-                img.attr("animated", data.fixed_height_small_url);
-                img.attr("still", data.fixed_height_small_still_url);
-
-                // card body
-                var cardbody = $("<div>");
-                cardbody.addClass("card-body row")
-
-                // card details, currently has title.
-                var title = $("<h5>");
-                title.addClass("card-title col-9 m-0");
-                title.html(data.title);
-
-
-                var buttondiv = $("<div>");
-                buttondiv.addClass("col-3 m-0 p-0")
-
-                // Add a heart for like
-                var hearti = $("<i>");
-                hearti.addClass("btn btn-outline-danger btn-sm btn-block fas fa-heart m-0 pz-0")
-
-                // Add a copy for copying the url
-                var copyi = $("<i>");
-                copyi.addClass("btn btn-outline-primary btn-sm btn-block fas fa-link m-0 pz-0")
-                copyi.attr("link", data.fixed_height_small_url)
-
-                // Add a link to go to Giphy page (navigate, go to)
-
-                buttondiv.append(hearti, copyi);
-                cardbody.append(title, buttondiv);
-                containerdiv.append(img, cardbody);
-
-                $(randompulldiv).append(containerdiv);
-
+                // Trigger the card creator function
+                app.cardCreator(data);
 
                 jaxNumber += 1;
                 if(jaxNumber === 10) {
-
-                    app.gifListener();
-                    // turn back on the listeners
-                    $(".button").attr("disabled", false);
-                    app.inputListener();
-                    app.favoriteListener();
-                    app.copyListener();
+                    app.allListeners();
+                    // // turn back on the listeners
+                    // app.gifListener();
+                    // $(".button").attr("disabled", false);
+                    // app.inputListener();
+                    // app.favoriteListener();
+                    // app.copyListener();
                 }
 
             });
         }
 
+    },
+
+    cardCreator : function(data) {
+        // container div
+        var containerdiv = $("<div>");
+        containerdiv.addClass("card border-secondary cardcontainer");
+
+        // image div
+        var img = $("<img>");
+        img.addClass("card-img-top p-2 border-secondary image");
+        img.attr("src", data.fixed_height_small_still_url);
+        img.attr("state", "still");
+        img.attr("animated", data.fixed_height_small_url);
+        img.attr("still", data.fixed_height_small_still_url);
+
+        // card body
+        var cardbody = $("<div>");
+        cardbody.addClass("card-body row")
+
+        // card details, currently has title.
+        var title = $("<h5>");
+        title.addClass("card-title col-9 m-0");
+        title.html(data.title);
+
+
+        var buttondiv = $("<div>");
+        buttondiv.addClass("col-3 m-0 p-0")
+
+        // Add a heart for like
+        var hearti = $("<i>");
+        hearti.addClass("btn btn-outline-danger btn-sm btn-block fas fa-heart m-0 pz-0")
+
+        // Add a copy for copying the url
+        var copyi = $("<i>");
+        copyi.addClass("btn btn-outline-primary btn-sm btn-block fas fa-link m-0 pz-0")
+        copyi.attr("link", data.fixed_height_small_url)
+
+        // Add a link to go to Giphy page (navigate, go to)
+
+        buttondiv.append(hearti, copyi);
+        cardbody.append(title, buttondiv);
+        containerdiv.append(img, cardbody);
+
+        $(randompulldiv).append(containerdiv);
+    },
+
+    allListeners : function() {
+        // turn back on the listeners
+        this.gifListener();
+        $(".button").attr("disabled", false);
+        this.inputListener();
+        this.favoriteListener();
+        this.closeFavoriteListener();
+        this.copyListener();
     },
 
     buttonListener : function() {
@@ -162,6 +176,7 @@ var app = {
             console.log($(this).children(".text").text())
             app.searchterm = $(this).children(".text").text();
             app.imagepull();
+            $("#sidebarheader").select();
         })
     },
 
@@ -195,32 +210,66 @@ var app = {
         });
     },
 
+    // Listens for any favorite clicks
     favoriteListener : function() {
         $(".fa-heart").off("click");
         app.favoriteListenerVariable = $(".fa-heart").on("click", function () {
+            // Create a copy of the entire div
             var favorite = $(this).parent().parent().parent().clone();
+            // Add a new class for the container to have a margin top of 2
             favorite.addClass("mt-2");
-            $("#sidebar").append(favorite);
-        });
+            // prepend the image to the favorite
+            $("#sidebarimage").prepend(favorite);
 
+            // Change the heart to a X
+            var favoriteButton = favorite.find(".fa-heart");
+            favoriteButton.removeClass("fa-heart btn-outline-danger");
+            favoriteButton.addClass("fa-times-circle btn-outline-dark")
+
+            console.log(favorite);
+
+            // Change the function of the X to a new listener; closeFavoriteListener.
+
+            app.allListeners();
+        });
     },
 
+    closeFavoriteListener : function() {
+        $(".fa-times-circle").off("click");
+        app.closeFavoritesListenerVariable = $(".fa-times-circle").on("click", function () {
+            $(this).parent().parent().parent().remove();
+            app.allListeners();
+        });
+    },
+
+    // listens for any copy clicks
     copyListener : function() {
         $(".fa-link").off("click");
         app.copyListenerVariable = $(".fa-link").on("click", function() {
-            // Create a div that will instantaneously be created to copy the value
-            var copydiv = $("<div>");
+            // Create an input that will instantaneously be created to copy the value
+            var copydiv = $("<input>");
             // Add the text of the attribute link
-            copydiv.text($(this).attr("link"));
+            copydiv.val($(this).attr("link"));
             copydiv.attr("id", "uniquecopy");
             // append the child to select and copy the text
             $("#sidebar").append(copydiv);
             $("#uniquecopy").addClass("test")
             $("#uniquecopy").select();
             
-            // document.execCommand("copy");
+            document.execCommand("copy");
             // remove the copy so there is no trace
-            // copydiv.remove();
+            copydiv.remove();
+
+            // Replace the classes fa-link -> fa-check && btn-outline-primary -> btn-outline-success
+            $(this).removeClass("fa-link btn-outline-primary");
+            $(this).addClass("fa-check btn-outline-success");
+            var intervalDiv = $(this);
+            
+            // set interval to undo the class changes;
+            setTimeout(function() {
+                intervalDiv.addClass("fa-link btn-outline-primary");
+                intervalDiv.removeClass("fa-check btn-outline-success");
+            }, 1000)
         })
     },
 }
