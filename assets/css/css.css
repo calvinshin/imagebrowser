@@ -1,9 +1,14 @@
 body{
     background-color: black;
+    
 }
 
 .test {
-    /* color: black; */
+    color: black;
+}
+
+h2{
+    color: white;
 }
 
 div.card:hover{
@@ -12,5 +17,38 @@ div.card:hover{
 }
 
 #buttoncontainer {
+    border-radius: 0px;
+}
 
+.button {
+    position: relative;
+    padding-right: 25px;
+}
+
+.close {
+    position: absolute;
+    right: 6px;
+    top: 2px;
+    color: white;
+    font-weight: normal;
+}
+
+#sidebar {}
+
+.leftcolumn {
+    position: absolute;
+    overflow-y: scroll;
+    left: 0;
+    height: 100%;
+}
+
+.rightcolumn {
+    position: absolute;
+    overflow-y: scroll;
+    right: 0;
+    height: 100%;
+}
+
+#sidebarheader {
+    color: white;
 }
