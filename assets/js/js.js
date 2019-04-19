@@ -1,5 +1,4 @@
 // Things I want to do
-    // fix viewport issues 
     // Pause button on the image transparently. Switching quickly to play and then disappears.
     // Clicking again adds the pause button
 
@@ -17,7 +16,14 @@ var app = {
         this.jaxNumber = 0;
         this.favoriteArray = JSON.parse(localStorage.getItem("favoriteArray"));
         if(!Array.isArray(this.favoriteArray)) {
-            this.favoriteArray = [];
+            this.favoriteArray = [
+                {fixed_height_small_still_url : "assets/other/playgif.gif",
+                fixed_height_small_url : "assets/other/playgif.gif",
+                title : "click a gif to play it"},
+                {fixed_height_small_still_url : "assets/other/instructions.gif",
+                fixed_height_small_url : "assets/other/instructions.gif",
+                title : "click a button to get started"}
+                ];
         };
 
         this.localStorageFavoriteCreation();
@@ -58,26 +64,27 @@ var app = {
     
     // triggered on the input being pressed
     inputFunction : function() {
-        if($("input").val().trim() != "") {
+        if($("#input").val().trim() != "") {
+            $("#mainwindow").animate({scrollTop : 0}, 500);
             // Update the input as a value; set it as a local variable
-            var input = $("input").val().trim().toLowerCase();
+            var input = $("#input").val().trim().toLowerCase();
             // clear the input on the screen
-            $("input").val("");
+            $("#input").val("");
 
             // If the search term is new, add it to the array.
-            if(this.animalArray.indexOf(input) === -1) {
+            if(app.animalArray.indexOf(input) === -1) {
                 // push this to localstorage; due to the prepend of the buttons, push is usable. If items were appended, an unshift would be used instead
-                this.animalArray.push(input);
-                localStorage.setItem("searchArray", JSON.stringify(this.animalArray));
+                app.animalArray.push(input);
+                localStorage.setItem("searchArray", JSON.stringify(app.animalArray));
 
                 // Create a new button
-                this.buttonCreation(input);
+                app.buttonCreation(input);
             }
 
             // Update the searchterm with the input and do an image pull.
             // Should not hinder user from intended search of image.
-            this.searchterm = input;
-            this.imagepull();
+            app.searchterm = input;
+            app.imagepull();
         }
         else{
             $("input").val("");
@@ -152,12 +159,6 @@ var app = {
                 jaxNumber += 1;
                 if(jaxNumber === 10) {
                     app.allListeners();
-                    // // turn back on the listeners
-                    // app.gifListener();
-                    // $(".button").attr("disabled", false);
-                    // app.inputListener();
-                    // app.favoriteListener();
-                    // app.copyListener();
                 }
 
             });
@@ -201,13 +202,11 @@ var app = {
         copyi.addClass("btn btn-outline-primary btn-sm btn-block fas fa-link m-0 pz-0");
         copyi.attr("link", data.fixed_height_small_url);
 
-        // Add a link to go to Giphy page (navigate, go to)
-
         buttondiv.append(hearti, copyi);
         cardbody.append(title, buttondiv);
         containerdiv.append(img, cardbody);
 
-        $(".randompulldiv").append(containerdiv);
+        $(".randompulldiv:first").append(containerdiv);
     },
 
     // Given some card, create a copy of the card into favorites. Need this separate to recreate favorites on reload.
@@ -323,6 +322,8 @@ var app = {
             // Create a copy of the entire div
             var favorite = $(this).parent().parent().parent().clone();
             var isAdd = 1;
+
+            $("#sidebar").animate({scrollTop : 0}, 500);
 
             app.favoriteObjectCreator(favorite, isAdd);
 

@@ -18,7 +18,19 @@ div.card:hover{
 
 #buttoncontainer {
     border-radius: 0px;
+    margin: 0px !important;
+    padding: 30px 32px 20px 32px;
 }
+
+#stickytop {
+    position: sticky;
+    top: 0px;
+    border-radius: 0px;
+    margin: 0px !important;
+    z-index: 2;
+    padding: 20px 32px 10px;
+}
+
 
 .button {
     position: relative;
@@ -51,6 +63,14 @@ div.card:hover{
 
 #sidebarheader {
     color: white;
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+    margin: 0px !important;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    width: 100%;
+    background-color: black;
 }
 
 @media (max-width: 760px) {
@@ -63,8 +83,8 @@ div.card:hover{
     .rightcolumn {
         position: absolute;
         overflow-y: scroll;
-        top: calc(55% + 55px);
-        height: calc(45% - 55px);
+        top: calc(55% + 52px);
+        height: calc(45% - 52px);
         background-color: teal;
     }
 
@@ -72,6 +92,12 @@ div.card:hover{
         position: fixed;
         top: 55vh;
         left: 0;
+        margin: 0px !important;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        width: 100vw;
+        padding-left: 10px;
+        background-color: teal;
     }
 }
 
@@ -86,14 +112,15 @@ div.card:hover{
 
 @media (max-width: 576px) {
     #massivecontainer {
-        width: 80%;
+        width: 70%;
         position: absolute;
         left: 50%;
         transform: translate(-50%, 0%);
     }
 
     #sidebarimage {
-        width: 80%;
+        padding: 0px 15px;
+        width: 70%;
         position: absolute;
         left: 50%;
         transform: translate(-50%, 0%);
