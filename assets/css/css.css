@@ -57,15 +57,46 @@ div.card:hover{
     .leftcolumn {
         position: absolute;
         overflow-y: scroll;
-        height: 60%;
-        background-color: yellow;
+        height: 55%;
     }
     
     .rightcolumn {
         position: absolute;
         overflow-y: scroll;
-        top: 60%;
-        height: 40%;
+        top: calc(55% + 55px);
+        height: calc(45% - 55px);
+        background-color: teal;
+    }
+
+    #sidebarheader {
+        position: fixed;
+        top: 55vh;
+        left: 0;
+    }
+}
+
+@media (max-width: 760px) and (min-width: 576px) {
+    #sidebarimage {
+        width: 40%;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0%);
+    }
+}
+
+@media (max-width: 576px) {
+    #massivecontainer {
+        width: 80%;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0%);
+    }
+
+    #sidebarimage {
+        width: 80%;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0%);
     }
 }
 
