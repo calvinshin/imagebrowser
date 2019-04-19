@@ -1,7 +1,3 @@
-// Things I want to do
-    // Pause button on the image transparently. Switching quickly to play and then disappears.
-    // Clicking again adds the pause button
-
 // javascript for the image browsing app
 
 var app = {

@@ -67,8 +67,9 @@ div.card:hover{
     top: 0px;
     z-index: 2;
     margin: 0px !important;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    padding-left: 18px;
     width: 100%;
     background-color: black;
 }
@@ -83,20 +84,12 @@ div.card:hover{
     .rightcolumn {
         position: absolute;
         overflow-y: scroll;
-        top: calc(55% + 52px);
-        height: calc(45% - 52px);
+        top: calc(55%);
+        height: calc(45%);
         background-color: teal;
     }
 
     #sidebarheader {
-        position: fixed;
-        top: 55vh;
-        left: 0;
-        margin: 0px !important;
-        padding-top: 12px;
-        padding-bottom: 12px;
-        width: 100vw;
-        padding-left: 10px;
         background-color: teal;
     }
 }
@@ -126,5 +119,3 @@ div.card:hover{
         transform: translate(-50%, 0%);
     }
 }
-
-/* https://css-tricks.com/scroll-fix-content/ */
